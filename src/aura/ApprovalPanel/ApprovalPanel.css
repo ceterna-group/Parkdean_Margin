@@ -1,0 +1,34 @@
+/**
+ * Created by ronanwilliams on 2019-08-08.
+ */
+
+
+.THIS .panel {
+    display: flex;
+    padding: 5px;
+    width: 100%;
+    justify-content: center;
+}
+
+.THIS .text {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+
+@media (max-width: 600px) {
+    .THIS .panel {
+        display: block;
+    }
+    .THIS .text {
+        font-size: 15px;
+        margin-right: 0;
+        width: 100%;
+        text-align: center;
+    }
+    .THIS .buttons {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+}

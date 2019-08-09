@@ -1,0 +1,63 @@
+.THIS.search-fields {
+  padding: 10px;
+}
+.THIS.search-fields lightning-input {
+  padding-bottom: 10px;
+}
+.THIS.search-fields .slds-button {
+  width: 100%;
+}
+.THIS .search-card {
+  height: 32px;
+  position: relative;
+  margin: 0 10px 10px 10px;
+}
+.THIS .search-card .slds-card {
+  padding: 0 10px;
+  height: 32px;
+}
+.THIS .search-card .slds-button {
+  position: absolute;
+  right: 10px;
+  top: 0px;
+  width: 50px;
+}
+.THIS .search-card label {
+  width: 35px;
+  margin-bottom: 0px !important;
+  margin-right: 10px;
+  padding: 0px !important;
+}
+.THIS .search-card label,
+.THIS .search-card label ~ div {
+  float: left;
+  height: 32px;
+  line-height: 32px;
+}
+.THIS .search-card .email {
+  margin-left: 50px;
+}
+.THIS .search-card .val {
+  width: calc((100% - 100px - 90px) / 2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.THIS .search-results--header {
+  position: relative;
+  height: 52px;
+  padding: 0 10px;
+}
+.THIS .search-results--header .slds-button--neutral {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.THIS .search-results--header .slds-text-heading_medium {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+}
+.THIS .slds-text-heading_small {
+  padding: 0 10px 5px 10px;
+}

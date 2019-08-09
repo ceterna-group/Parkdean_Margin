@@ -1,0 +1,86 @@
+<aura:component controller="LeadSearch" implements="flexipage:availableForAllPageTypes">
+    
+  <aura:attribute type="String" name="firstName" default=""></aura:attribute>
+  <aura:attribute type="String" name="lastName" default=""></aura:attribute>
+  <aura:attribute type="String" name="email" default=""></aura:attribute>
+  <aura:attribute type="String" name="postcode" default=""></aura:attribute>
+  <aura:attribute type="String" name="phone" default=""></aura:attribute>
+  <aura:attribute type="String" name="mobile" default=""></aura:attribute>
+  <aura:attribute type="Boolean" name="loading" default="false"></aura:attribute>
+  <aura:attribute type="Boolean" name="searched" default="false"></aura:attribute>
+  <aura:attribute type="List" name="holidayMakers"></aura:attribute>
+  <aura:attribute type="List" name="leads"></aura:attribute>
+  <aura:attribute type="List" name="contacts"></aura:attribute>
+  <aura:attribute type="Integer" name="holidayMakersCount" default="0"></aura:attribute>
+  <aura:attribute type="Integer" name="leadsCount" default="0"></aura:attribute>
+  <aura:attribute type="Integer" name="contactsCount" default="0"></aura:attribute>
+  <lightning:utilityBarAPI aura:id="utilitybar" />
+    
+  <aura:if isTrue="{!!v.searched}">
+    <div class="search-fields">
+      <div>Search with a first name, last name, email, or combination of all three.</div>
+      <lightning:input name="first_name" value="{!v.firstName}" placeholder="First Name.." label="First Name" />
+      <lightning:input name="last_name" value="{!v.lastName}" placeholder="Last Name.." label="Last Name" />
+      <lightning:input name="email" value="{!v.email}" placeholder="Email Address.." label="Email Address" />
+      <lightning:input name="postcode" value="{!v.postcode}" placeholder="Postcode.." label="Post Code" />
+      <lightning:input name="phone" value="{!v.phone}" placeholder="Phone Number.." label="Phone Number" />
+      <lightning:input name="mobile" value="{!v.mobile}" placeholder="Mobile Number.." label="Mobile Number" />
+      <lightning:button variant="brand" label="Run Search" title="Run Search" onclick="{!c.runSearch}" />
+    </div>
+  </aura:if>
+    
+  <aura:if isTrue="{!v.loading}">
+    <lightning:spinner alternativeText="Loading" />
+  </aura:if>
+    
+  <aura:if isTrue="{!v.searched}">
+    <div class="search-results">
+      <div class="search-results--header">
+        <button class="slds-button" onclick="{!c.goBack}">Back to search</button>
+        <div class="slds-text-heading_medium">Search Results</div>
+        <button class="slds-button slds-button--neutral" onclick="{!c.createLead}">New Lead</button>
+      </div>
+        
+      <div class="slds-text-heading_small">Contacts ({!v.contactsCount})</div>
+      <aura:iteration items="{!v.contacts}" var="i">
+        <div class="search-card">
+          <div class="slds-card">
+            <label class="slds-form-element__label">Name</label>
+            <div class="val">{!i.FirstName}&nbsp;{!i.LastName}</div>
+            <label class="slds-form-element__label email">Email</label>
+            <div class="val">{!i.Email}</div>
+            <lightning:button name="{!i.Id}" variant="base" label="Open" title="Open" onclick="{!c.openRecord}" />
+          </div>
+        </div>
+      </aura:iteration>
+        
+      <div class="slds-text-heading_small">Holiday Makers ({!v.holidayMakersCount})</div>
+      <aura:iteration items="{!v.holidayMakers}" var="i">
+        <div class="search-card">
+          <div class="slds-card">
+            <label class="slds-form-element__label">Name</label>
+            <div class="val">{!i.FirstName}&nbsp;{!i.LastName}</div>
+            <label class="slds-form-element__label email">Email</label>
+            <div class="val">{!i.Email}</div>
+            <lightning:button name="{!i.Id}" variant="base" label="Convert" title="Convert" onclick="{!c.convertLead}" />
+          </div>
+        </div>
+      </aura:iteration>
+        
+      <div class="slds-text-heading_small">Leads ({!v.leadsCount})</div>
+      <aura:iteration items="{!v.leads}" var="i">
+        <div class="search-card">
+          <div class="slds-card">
+            <label class="slds-form-element__label">Name</label>
+            <div class="val">{!i.FirstName}&nbsp;{!i.LastName}</div>
+            <label class="slds-form-element__label email">Email</label>
+            <div class="val">{!i.Email}</div>
+            <lightning:button name="{!i.Id}" variant="base" label="Open" title="Open" onclick="{!c.openRecord}" />
+          </div>
+        </div>
+      </aura:iteration>
+        
+    </div>
+  </aura:if>
+	
+</aura:component>

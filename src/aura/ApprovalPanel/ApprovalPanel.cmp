@@ -1,0 +1,39 @@
+<!--
+ - Created by ronanwilliams on 2019-08-08.
+ -->
+
+<aura:component description="ApprovalPanel" controller="ApprovalPanelController"
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+
+    <aura:attribute name="initialised" type="Boolean" default="false" />
+    <aura:attribute name="componentUpdate" type="Boolean" default="false" />
+    <aura:attribute name="render" type="Boolean" default="false"/>
+    <aura:attribute name="quote" type="Object" />
+    <aura:attribute name="record" type="Quote" />
+    <aura:attribute name="approver" type="Boolean" default="false" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <force:recordData aura:id="forceRecord"
+                        recordId="{!v.recordId}"
+                        fields="Approval_Status__c"
+                        targetFields="{!v.record}"
+                        recordUpdated="{!c.recordUpdated}" />
+
+    <aura:if isTrue="{!v.render}">
+        <lightning:card >
+            <div class="panel">
+                <div class="text" >
+                    THIS RECORD IS PENDING {!v.approver ? 'YOUR' : '' } APPROVAL
+                </div>
+                <aura:if isTrue="{!v.approver}">
+                    <div class="buttons">
+                        <lightning:layout >
+                            <lightning:button label="APPROVE" variant="success" onclick="{!c.approveRecord}"/>
+                            <lightning:button label="REJECT" variant="destructive" onclick="{!c.rejectRecord}"/>
+                        </lightning:layout>
+                    </div>
+                </aura:if>
+            </div>
+        </lightning:card>
+    </aura:if>
+</aura:component>
