@@ -39,9 +39,9 @@ public with sharing class ApprovalPanelController {
         if (!notification.isEmpty()){
             notification[0].Approval_Response_Time__c   = DateTime.now();
             notification[0].Approval_Responded_By__c    = UserInfo.getUserId();
+            notification[0].Status__c                   = approved ? 'Approved' : 'Rejected';
             update notification;
         }
-
 
         return true;
     }
