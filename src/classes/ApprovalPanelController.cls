@@ -29,7 +29,8 @@ public with sharing class ApprovalPanelController {
             Id                                  = recordId,
             Approval_Status__c                  = approved ? 'Approved' : 'Rejected',
             Approval_Responded_By__c            = UserInfo.getUserId(),
-            Latest_Approval_Response_Time__c    = Datetime.now()
+            Latest_Approval_Response_Time__c    = Datetime.now(),
+            Latest_Rejection_Comment__c         = comment
         );
 
         List<Margin_Notification__c> notification = [SELECT Id FROM Margin_Notification__c
