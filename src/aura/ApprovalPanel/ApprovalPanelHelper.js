@@ -5,7 +5,11 @@
 ({
     updateRecord : function($C,approved) {
         var approveRecordResult = $C.get('c.approveRecordApex');
-        approveRecordResult.setParams({ recordId : $C.get('v.recordId'), approved : approved});
+        approveRecordResult.setParams({
+            recordId : $C.get('v.recordId'),
+            approved : approved,
+            comment : $C.get('v.comment')
+        });
         approveRecordResult.setCallback(this, function(response){
             if (response.getState() === 'SUCCESS' && response.getReturnValue()){
                 $C.set('v.render',false);

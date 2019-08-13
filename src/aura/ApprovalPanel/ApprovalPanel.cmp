@@ -10,12 +10,14 @@
     <aura:attribute name="render" type="Boolean" default="false"/>
     <aura:attribute name="quote" type="Object" />
     <aura:attribute name="record" type="Quote" />
+    <aura:attribute name="rejecting" type="Boolean" default="false"/>
+    <aura:attribute name="comment" type="String" />
     <aura:attribute name="approver" type="Boolean" default="false" />
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <force:recordData aura:id="forceRecord"
                         recordId="{!v.recordId}"
-                        fields="Approval_Status__c"
+                        fields="Approval_Status__c,Owner"
                         targetFields="{!v.record}"
                         recordUpdated="{!c.recordUpdated}" />
 
@@ -28,12 +30,20 @@
                 <aura:if isTrue="{!v.approver}">
                     <div class="buttons">
                         <lightning:layout >
-                            <lightning:button label="APPROVE" variant="success" onclick="{!c.approveRecord}"/>
-                            <lightning:button label="REJECT" variant="destructive" onclick="{!c.rejectRecord}"/>
+                            <lightning:button label="APPROVE" variant="success" onclick="{!c.approveRecord}" disabled="{!v.comment}"/>
+                            <lightning:button label="{!v.comment ? 'CONFIRM REJECT' : 'REJECT'}" variant="destructive"
+                                              onclick="{!c.rejectRecord}" disabled="{!and(v.rejecting,not(v.comment))}"/>
                         </lightning:layout>
                     </div>
                 </aura:if>
             </div>
+            <aura:if isTrue="{!v.rejecting}">
+                <div style="display: flex;justify-content: center;">
+                    <div style="width:50%;">
+                        <lightning:textarea value="{!v.comment}" placeholder="Please add a message for the record owner here..." />
+                    </div>
+                </div>
+            </aura:if>
         </lightning:card>
     </aura:if>
 </aura:component>

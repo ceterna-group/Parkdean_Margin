@@ -16,20 +16,20 @@ public with sharing class ApprovalPanelController {
         responseValues.put('_quote',quote);
         responseValues.put('_requiresApproval',quote.Approval_Status__c == 'Pending');
         responseValues.put('_currentUser',(UserInfo.getUserId() == quote.OwnerId));
-        responseValues.put('_userRole',([SELECT UserRole.Name FROM User WHERE Id = :userInfo.getUserId()].UserRole.Name == 'System Administrators'));
+        responseValues.put('_userRole',([SELECT UserRole.Name FROM User WHERE Id = :UserInfo.getUserId()].UserRole.Name == 'System Administrators'));
         responseValues.put('_approver',UserInfo.getUserId() == quote.Park__r.Regional_Sales_Manager__c || UserInfo.getUserId() == quote.Park__r.Regional_Director__c);
 
         return responseValues;
     }
 
     @AuraEnabled
-    public static Boolean approveRecordApex(String recordId, Boolean approved) {
+    public static Boolean approveRecordApex(String recordId, Boolean approved, String comment) {
 
         update new Quote(
             Id                                  = recordId,
             Approval_Status__c                  = approved ? 'Approved' : 'Rejected',
             Approval_Responded_By__c            = UserInfo.getUserId(),
-            Latest_Approval_Response_Time__c    = DateTime.now()
+            Latest_Approval_Response_Time__c    = Datetime.now()
         );
 
         List<Margin_Notification__c> notification = [SELECT Id FROM Margin_Notification__c
@@ -37,9 +37,10 @@ public with sharing class ApprovalPanelController {
                                                     AND Void__c = FALSE];
 
         if (!notification.isEmpty()){
-            notification[0].Approval_Response_Time__c   = DateTime.now();
+            notification[0].Approval_Response_Time__c   = Datetime.now();
             notification[0].Approval_Responded_By__c    = UserInfo.getUserId();
             notification[0].Status__c                   = approved ? 'Approved' : 'Rejected';
+            notification[0].Comment__c                  = comment;
             update notification;
         }
 

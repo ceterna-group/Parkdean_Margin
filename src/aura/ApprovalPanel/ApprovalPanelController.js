@@ -16,6 +16,8 @@
                $C.set('v.render',render);
                $C.set('v.approver',approver);
                $C.set('v.quote',quote);
+               $C.set('v.rejecting',false);
+               $C.set('v.comment','');
                $C.set('v.initialised',true);
            }
         });
@@ -25,7 +27,11 @@
         $H.updateRecord($C,true);
     },
     rejectRecord : function($C,$E,$H) {
-        $H.updateRecord($C,false);
+        if ($C.get('v.comment')){
+            $H.updateRecord($C,false);
+        } else {
+            $C.set('v.rejecting',true);
+        }
     },
     recordUpdated : function($C,$E,$H){
 
