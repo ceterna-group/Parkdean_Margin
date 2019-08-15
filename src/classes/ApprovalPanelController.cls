@@ -12,7 +12,7 @@ public with sharing class ApprovalPanelController {
 
         Quote quote = [SELECT Id, Approval_Status__c, OwnerId, Park__r.Regional_Sales_Manager__c,
                               Park__r.Regional_Director__c
-                       FROM Quote WHERE Id = '0Q01j0000009n2BCAQ'];
+                       FROM Quote WHERE Id = :recordId];
         responseValues.put('_quote',quote);
         responseValues.put('_requiresApproval',quote.Approval_Status__c == 'Pending');
         responseValues.put('_currentUser',(UserInfo.getUserId() == quote.OwnerId));

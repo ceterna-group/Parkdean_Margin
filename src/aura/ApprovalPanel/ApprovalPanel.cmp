@@ -21,7 +21,10 @@
                         targetFields="{!v.record}"
                         recordUpdated="{!c.recordUpdated}" />
 
-    <aura:if isTrue="{!and(v.render,v.record.Approval_Status__c == 'Pending')}">
+<!--    {!v.record.Approval_Status__c}-->
+
+<!--    <aura:if isTrue="{!and(v.render,v.record.Approval_Status__c == 'Pending')}">-->
+    <aura:if isTrue="{!v.render}">
         <lightning:card >
             <div class="panel">
                 <div class="text" >

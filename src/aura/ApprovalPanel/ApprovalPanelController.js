@@ -9,7 +9,13 @@
         approvalInfo.setParams({ recordId : $C.get('v.recordId')});
         approvalInfo.setCallback(this, function(response){
            if (response.getState() === 'SUCCESS'){
+
                var data     = response.getReturnValue();
+
+
+               console.log('requires approval ' +  data._requiresApproval);
+               console.log('relevant user  ' + (data._currentUser || data._userRole));
+
                var quote    = data._quote;
                var render   = data._requiresApproval && (data._currentUser || data._userRole);
                var approver = data._userRole || data._approver;
