@@ -13,6 +13,10 @@ public without sharing class StockTriggerHandler extends TriggerHandler {
     
   // after stock are updated
   public override void beforeUpdate() {
+
+    // Unit_Type__c, SIV__c, Width__c, Double_Glazing__c, Central_Heating__c, Park__c
+
+
     // calculate min aum
     StockHandler.setAUM(Trigger.new);
   }

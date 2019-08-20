@@ -1,14 +1,17 @@
 public class StockHandler {
-    
+
+
   public static void setAUM(List<Product2> stock) {
     System.debug('START');
     System.debug(stock);
+
     // get ids from stock
     Set<Id> stockParkIds = new Set<Id>();
     for (Integer s = 0; s < stock.size(); s++) {
       String parkId = stock[s].Park__c;
       if (parkId != null) stockParkIds.add(parkId);
     }
+
     // get parks and target years from stock ids
     List<Park__c> parks = [
       SELECT Id, Name,
@@ -18,10 +21,13 @@ public class StockHandler {
       FROM Park__c
       WHERE Id IN :stockParkIds
     ];
+
     // map park id to target year
     Map<String, Park_Target_Year__c> mapParkToTarget = new Map<String, Park_Target_Year__c>();
+
     // map park id to banding id
     Map<String, String> mapParkToBanding = new Map<String, String>();
+
     // get bandings from target years
     Set<Id> targetBandingIds = new Set<Id>();
     for (Integer p = 0; p < parks.size(); p++) {
@@ -36,14 +42,16 @@ public class StockHandler {
     }
     // get bandings and their categories
     List<Banding__c> bandings = [
-      SELECT Id, Name, 
-        (SELECT Id, Name, Caravan_NB_AUM_Flex__c, Caravan_PX_AUM_Flex__c,
+      SELECT Id, Name,
+        (SELECT Id, Name, NB_AUM_Flex__c, PX_AUM_Flex__c,
            Lodge_NB_AUM_Flex__c, Lodge_PX_AUM_Flex__c, Category__c,
            Unit_Type__c
          FROM Banding_Categories__r)
       FROM Banding__c
       WHERE Id IN :targetBandingIds
     ];
+
+
     // map banding id to banding categories
     Map<String, List<Banding_Category__c>> mapBandingToCategories = new Map<String, List<Banding_Category__c>>();
     for (Integer b = 0; b < bandings.size(); b++) {
@@ -82,14 +90,17 @@ public class StockHandler {
             // as long as we have at least one match
             System.debug(matchCategories);
             if (matchCategories.size() > 0) {
-              Banding_Category__c match = matchCategories[0]; 
+              Banding_Category__c match = matchCategories[0];
+
               // if we find a match
               if (stockType == 'Static' || stockType == 'Lodge') {
                 String typeName = stockType == 'Static' ? 'Caravan' : 'Lodge';
                 Decimal targetNB = (Decimal) target.get(typeName + '_NB_AUM__c');
-                Decimal flexNB = (Decimal) match.get(typeName + '_NB_AUM_Flex__c') / 100;
                 Decimal targetPX = (Decimal) target.get(typeName + '_PX_AUM__c');
-                Decimal flexPX = (Decimal) match.get(typeName + '_PX_AUM_Flex__c') / 100; 
+                Decimal flexPX = (Decimal) match.get('PX_AUM_Flex__c') / 100;
+                  Decimal flexNB = (Decimal) match.get('NB_AUM_Flex__c') / 100;
+
+
                 // only set if we have both vars
                 if (targetNB != null && flexNB != null) {
                   stock[s].Min_AUM__c = targetNB * flexNB;

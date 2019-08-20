@@ -5,7 +5,7 @@
     };
     $H.runAction($C, 'c.checkQuote', params, function(response) {
       console.log(response);
-      if (response != 'Ready') {
+      if (response[0] != 'Ready') {
         $C.set('v.error', response);
         $C.set('v.loading', false);
       } else {
