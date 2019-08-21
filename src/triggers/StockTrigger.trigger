@@ -1,13 +1,18 @@
 trigger StockTrigger on Product2 (before insert, before update) {
-    
-  StockTriggerHandler handler = new StockTriggerHandler();
-    
-  if (Trigger.isInsert && Trigger.isBefore) {
-    handler.beforeInsert();
-  }
-    
-  if (Trigger.isUpdate && Trigger.isBefore) {
-    handler.beforeUpdate();
-  }
 
+    if (Trigger.isBefore) {
+        if (Trigger.isInsert) {
+            StockTriggerHandler.beforeInsert(Trigger.new);
+        }
+        if (Trigger.isUpdate) {
+            StockTriggerHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
+        }
+    }
+
+    if (Trigger.isAfter) {
+        if (Trigger.isInsert) {
+        }
+        if (Trigger.isUpdate) {
+        }
+    }
 }

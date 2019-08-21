@@ -4,10 +4,10 @@
     <option name="connections">
       <list>
         <IlluminatedCloudConnection>
-          <option name="connectionName" value="Parkdean Margin" />
+          <option name="connectionName" value="PD Margin" />
           <option name="connectionType" value="MDAPI" />
           <option name="defaultModuleName" value="Parkdean Margin" />
-          <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/Parkdean_Margin/OfflineSymbolTable.zip" />
+          <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/PD_Margin/OfflineSymbolTable.zip" />
         </IlluminatedCloudConnection>
       </list>
     </option>
